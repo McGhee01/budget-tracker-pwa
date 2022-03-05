@@ -17,3 +17,4 @@ request.onupgradeneeded = function (event) {
   // create an object store (table) called `new_transaction`, set it to have an auto incrementing primary key of sorts
   db.createObjectStore('new_transaction', { autoIncrement: true });
 };
+
