@@ -28,3 +28,13 @@ request.onerror = function (event) {
   // log error here
   console.log(event.target.errorCode);
 };
+
+// If no internet connection, save it to indexedDB database for the time being
+function saveRecord(record) {
+  const transaction = db.transaction(['transaction'], 'readwrite');
+  // access transaction object store created above
+  const budgetObjectStore = transaction.objectStore('transaction');
+
+  // add record using indexedDB get API
+  budgetObjectStore.add(record);
+}
