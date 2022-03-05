@@ -14,7 +14,17 @@ request.onupgradeneeded = function (event) {
   // save a reference to the database
   const db = event.target.result;
 
-  // create an object store (table) called `new_transaction`, set it to have an auto incrementing primary key of sorts
-  db.createObjectStore('new_transaction', { autoIncrement: true });
+  // create an object store (table) called `transaction`, set it to have an auto incrementing primary key of sorts
+  db.createObjectStore('transaction', { autoIncrement: true });
 };
 
+// upon a successful
+request.onsuccess = function (event) {
+  console.log('successfully connected to indexedDB budget_tracker');
+  db = event.target.result;
+};
+
+request.onerror = function (event) {
+  // log error here
+  console.log(event.target.errorCode);
+};
