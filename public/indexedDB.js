@@ -41,6 +41,7 @@ function saveRecord(record) {
 
 // Function that will save transactions to api database once connection is online again
 function saveTransactionsToMongoDatabase() {
+  console.log('saving transactions...')
 
   // access transactions in indexDB
   const transaction = db.transaction(['transaction'], 'readwrite');
