@@ -38,3 +38,48 @@ function saveRecord(record) {
   // add record using indexedDB get API
   budgetObjectStore.add(record);
 }
+
+// Function that will save transactions to api database once connection is online again
+function saveTransactionsToMongoDatabase() {
+
+  // access transactions in indexDB
+  const transaction = db.transaction(['transaction'], 'readwrite');
+  const budgetObjectStore = transaction.objectStore('transaction');
+
+  // get all records from store and set to a variable
+  const getAll = budgetObjectStore.getAll();
+
+  getAll.onsuccess = function () {
+
+    // if there was data in indexedDb's store send it to the api server
+    if (getAll.result.length > 0) {
+      fetch('/api/transaction', {
+        method: 'POST',
+        body: JSON.stringify(getAll.result),
+        headers: {
+          Accept: 'application/json, text/plain, */*',
+          'Content-Type': 'application/json'
+        }
+      })
+        .then(res => res.json())
+        .then(data => {
+          if (data.message) {
+            throw new Error(data);
+          }
+          // once saved, clear out all transactions
+          // clear all items in your store
+          budgetObjectStore.clear();
+          alert('All saved transactions has been submitted!');
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    }
+  }
+}
+
+// once the app is back online upload transactions
+window.addEventListener('online', function () {
+  console.log('back online!!');
+  saveTransactionsToMongoDatabase()
+})
