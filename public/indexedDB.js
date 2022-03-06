@@ -69,6 +69,9 @@ function saveTransactionsToMongoDatabase() {
           }
           // once saved, clear out all transactions
           // clear all items in your store
+          const transaction = db.transaction(['transaction'], 'readwrite');
+          const budgetObjectStore = transaction.objectStore('transaction');
+
           budgetObjectStore.clear();
           alert('All saved transactions has been submitted!');
         })
