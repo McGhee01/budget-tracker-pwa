@@ -49,8 +49,6 @@ self.addEventListener("fetch", event => {
     !event.request.url.startsWith(self.location.origin)
   ) {
     event.respondWith(fetch(event.request));
-    console.log('fetch url: ', event.request.url)
-    console.log('fetch method: ', event.request.method)
     return;
   }
 

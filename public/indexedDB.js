@@ -20,7 +20,6 @@ request.onupgradeneeded = function (event) {
 
 // upon a successful
 request.onsuccess = function (event) {
-  console.log('successfully connected to indexedDB budget_tracker');
   db = event.target.result;
 };
 
@@ -41,7 +40,6 @@ function saveRecord(record) {
 
 // Function that will save transactions to api database once connection is online again
 function saveTransactionsToMongoDatabase() {
-  console.log('saving transactions...')
 
   // access transactions in indexDB
   const transaction = db.transaction(['transaction'], 'readwrite');
@@ -84,6 +82,5 @@ function saveTransactionsToMongoDatabase() {
 
 // once the app is back online upload transactions
 window.addEventListener('online', function () {
-  console.log('back online!!');
   saveTransactionsToMongoDatabase()
 })

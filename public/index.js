@@ -135,8 +135,6 @@ function sendTransaction(isAdding) {
       }
     })
     .catch(err => {
-      console.log('failed to save to api... saving to indexedDB instead')
-      // TODO: Create saveRecord function
       saveRecord(transaction);
 
       // clear form
